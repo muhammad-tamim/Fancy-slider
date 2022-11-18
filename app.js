@@ -31,7 +31,8 @@ const showImages = (images) => {
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data => showImages(data.hitS))
+    // .then(data => showImages(data.hitS))
+    .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 }
 
@@ -39,7 +40,7 @@ let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
- 
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
@@ -50,8 +51,14 @@ const selectItem = (event, img) => {
 var timer
 const createSlider = () => {
   // check slider image length
+  console.log(duration.value);
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
+    return;
+  }
+  else if (duration.value < 0) {
+    alert('Plz ,Give me positive number')
+    duration.value = ''
     return;
   }
   // crate slider previous next area
@@ -67,7 +74,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  duration = document.getElementById('duration').value || 1000;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
