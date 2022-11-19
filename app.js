@@ -51,14 +51,8 @@ const selectItem = (event, img) => {
 var timer
 const createSlider = () => {
   // check slider image length
-  console.log(duration.value);
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
-    return;
-  }
-  else if (duration.value < 0) {
-    alert('Plz ,Give me positive number')
-    duration.value = ''
     return;
   }
   // crate slider previous next area
@@ -74,7 +68,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  duration = document.getElementById('duration').value || 1000;
+  const duration = document.getElementById('duration').value || 1000;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -122,8 +116,15 @@ searchBtn.addEventListener('click', function () {
   const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
+  search.value = ''
 })
 
 sliderBtn.addEventListener('click', function () {
+  if (duration.value < 0) {
+    alert('Plz ,Give me positive number')
+    duration.value = ''
+    return;
+  }
   createSlider()
+  duration.value = ''
 })
